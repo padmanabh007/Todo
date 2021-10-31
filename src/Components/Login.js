@@ -1,8 +1,6 @@
 import axios from 'axios'
-import { createContext, useState } from 'react'
+import { useState } from 'react'
 import Todo from './Todo'
-
-export const context = createContext()
 
 export default function Login() {
 
@@ -27,7 +25,7 @@ export default function Login() {
             <label>Password</label>
             <input type="password" placeholder='Password' onChange={(e) => setPassword(e.target.value)}/><br/>
             <button onClick={() => login()}>Submit</button>
-            {data[1] ? <context.Provider value={data[0]}><Todo/></context.Provider>:''}
+            {data[1] ? <Todo props={data[0]}/>:''}
             
         </div>
     )
