@@ -1,18 +1,22 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { createContext, useState } from 'react'
+import Todo from './Todo'
+
+export const context = createContext()
 
 export default function Login() {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [data, setData] = useState([])
 
   
 
     const login = () => {
         //console.log({email:email, password:password})
         axios.get(`http://localhost:5000/login/${email}/${password}`)
-        .then(response => console.log(response))
-        .catch(error => console.error(error))
+        .then(response => setData([response.data,true]))
+        .catch(error => console.log(error))
     }
   
 
@@ -23,6 +27,7 @@ export default function Login() {
             <label>Password</label>
             <input type="password" placeholder='Password' onChange={(e) => setPassword(e.target.value)}/><br/>
             <button onClick={() => login()}>Submit</button>
+            {data[1] ? <context.Provider value={data[0]}><Todo/></context.Provider>:''}
             
         </div>
     )

@@ -1,25 +1,28 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { context } from "./Login"
 
 export default function Todo() {
 
     const [todos, setTodos] = useState([])
     const [data, setData] = useState({})
 
+    const id = useContext(context)
+
     useEffect(() => {
-        axios.get('http://localhost:5000/todo')
+        axios.get(`http://localhost:5000/todo/${id.id}`)
         .then(response => setTodos(response.data))
         .catch(error => console.log(error))
-    }, [])
+    }, [id])
 
     const onAddHandler = () =>{
-        axios.post('http://localhost:5000/addTodo',data)
+        axios.post(`http://localhost:5000/addTodo/${id.id}`,data)
         .then(response => setTodos(response.data))
         .catch(error => console.log(error))
     }
 
     const onDeleteHandler = (key) =>{
-        axios.delete(`http://localhost:5000/delTodo/${key}`,data)
+        axios.delete(`http://localhost:5000/delTodo/${key}/${id.id}`,data)
         .then(response => setTodos(response.data))
         .catch(error => console.log(error))
     }
