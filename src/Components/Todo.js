@@ -7,19 +7,19 @@ export default function Todo(props) {
     const [data, setData] = useState({})
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/todo/${props.id}`)
+        axios.get(`http://localhost:5000/${props.id}/todo/`)
         .then(response => setTodos(response.data))
         .catch(error => console.log(error))
-    }, [id])
+    }, [props.id])
 
     const onAddHandler = () =>{
-        axios.post(`http://localhost:5000/addTodo/${pros.id}`,data)
+        axios.post(`http://localhost:5000/${props.id}/addTodo/`,data)
         .then(response => setTodos(response.data))
         .catch(error => console.log(error))
     }
-
+//
     const onDeleteHandler = (key) =>{
-        axios.delete(`http://localhost:5000/delTodo/${key}/${props.id}`,data)
+        axios.delete(`http://localhost:5000/${props.id}/delTodo/${key}/`,data)
         .then(response => setTodos(response.data))
         .catch(error => console.log(error))
     }
@@ -27,9 +27,10 @@ export default function Todo(props) {
     return (
         <div>
             <label>Todo</label><br/>
-            <input type="email" placeholder='Email' onChange={(e) => setData({work:e.target.value}) }/><br/>
+            <input type="text" placeholder='Todo' onChange={(e) => setData({todo:e.target.value}) }/><br/>
             <button onClick ={()=> onAddHandler()}>Add</button>
             { todos.map((item, key) => <p>{item.work}<button onClick = {()=>onDeleteHandler(item.id)}>X</button></p>) }
+            {console.log(props.id)}
         </div>
     )
 }

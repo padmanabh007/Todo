@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useState } from 'react'
+import Todo from './Todo'
 
 export default function SignUp() {
 
@@ -11,7 +12,7 @@ export default function SignUp() {
 
     const signUp = () => {
         if (password === confirmPassword){
-            axios.post('http://localhost:5000/signup',{'email':email, 'password':password})
+            axios.post('http://localhost:5000/signup/',{'email':email, 'password':password})
             .then(response => setData([response.data,true]))
             .catch(error => console.error(error))
         }
@@ -29,7 +30,8 @@ export default function SignUp() {
             <input type="password" placeholder='ConfirmPassword' onChange={(e) => setConfirmPassword(e.target.value)}/><br/>
             {bool ? <p>Both Passwords are not similar</p> :''}
             <button onClick={() => signUp()}>SignUp</button>
-            {data[1] ? <Todo props={data[0]}/>:''}
+            {data[1] ? <Todo id={data[0].id}/>:''}
+            {console.log(data)}
             
         </div>
     )
