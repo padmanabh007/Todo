@@ -2,28 +2,11 @@ from flask import Flask,jsonify,request
 from flask_sqlalchemy import SQLAlchemy
 import json
 from flask_cors import CORS
-#from flask_swagger_ui import get_swaggerui_blueprint
 
 app = Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///test.db'
 db = SQLAlchemy(app)
-
-
-#SWAGGER_URL = '/api/docs'
-#API_URL = '/static/swagger.json'
-#
-#swagger_blueprint = get_swaggerui_blueprint(
-#    SWAGGER_URL,
-#    API_URL,
-#    config = {
-#        'app_name':'Test application'
-#    }
-#
-#)
-#
-#app.register_blueprint(swagger_blueprint)
-#
 
 class Todo(db.Model):
     id = db.Column(db.Integer , primary_key=True, autoincrement=True)
@@ -74,7 +57,6 @@ def signup():
             return jsonify(person_making(data)),201
 
 
-
 @app.route('/<id>/todo/', methods = ['GET'])
 def todo(id):
     data = Todo.query.filter_by(idperson=id)
@@ -103,6 +85,3 @@ def del_Todo(idp,idt):
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-#
